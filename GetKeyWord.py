@@ -3,17 +3,19 @@ import jieba.analyse  # 导入关键字提取库
 import pandas as pd  # 导入pandas
 import newspaper
 
-# 读取文本数据
-# 获取文章 银保监会出台新政为例
-article = newspaper.Article('http://www.bjnews.com.cn/news/2019/07/02/598100.html', language='zh')
-# 下载文章
-article.download()
-# 解析文章
-article.parse()
-# 对文章进行nlp处理
-article.nlp()
-# nlp处理后的文章拼接
-string_data = "".join(article.keywords)
+def get_string_data():
+    # 读取文本数据
+    # 获取文章 银保监会出台新政为例
+    article = newspaper.Article('http://www.bjnews.com.cn/news/2019/07/02/598100.html', language='zh')
+    # 下载文章
+    article.download()
+    # 解析文章
+    article.parse()
+    # 对文章进行nlp处理
+    article.nlp()
+    # nlp处理后的文章拼接
+    string_data = "".join(article.keywords)
+    return string_data
 
 
 # 关键字提取
@@ -32,11 +34,12 @@ def get_key_words(string_data, how=''):
     tags_pd = pd.DataFrame(tags_list, columns=['word', 'weight'])  # 创建数据框
     return tags_pd
 
+if __name__ == '__main__':
+    string_data = get_string_data()
+    keywords = get_key_words(string_data)
+    print("#####################TF-IDF####################")
+    print(keywords)
 
-keywords = get_key_words(string_data)
-print("#####################TF-IDF####################")
-print(keywords)
-
-keywords_tr = get_key_words(string_data, how='textrank')
-print("#####################textrank####################")
-print(keywords_tr)
+    keywords_tr = get_key_words(string_data, how='textrank')
+    print("#####################textrank####################")
+    print(keywords_tr)
