@@ -5,7 +5,7 @@ import newspaper
 
 def get_string_data():
     # 读取文本数据
-    # 获取文章 银保监会出台新政为例
+    # 获取文章
     article = newspaper.Article('http://www.bjnews.com.cn/news/2019/07/02/598100.html', language='zh')
     # 下载文章
     article.download()
